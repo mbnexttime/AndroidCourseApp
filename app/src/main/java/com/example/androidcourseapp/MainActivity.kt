@@ -53,7 +53,16 @@ class MainActivity : Activity() {
         return listOf(
             ContactsTabController(),
             ContactsTabController(),
-            ContactsTabController()
+            ContactsTabController(),
+            ContactsTabController(),
+            ContactsTabController(),
+            ContactsTabController(),
+            ContactsTabController(),
+            ContactsTabController(),
+            ContactsTabController(),
+            ContactsTabController(),
+            ContactsTabController(),
+            ContactsTabController(),
         )
     }
 
