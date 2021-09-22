@@ -43,7 +43,7 @@ class MainActivity : Activity() {
     override fun onDestroy() {
         super.onDestroy()
         for (controller in controllers) {
-            controller.onDestroy()
+            controller.onDestroy(isChangingConfigurations)
         }
     }
 

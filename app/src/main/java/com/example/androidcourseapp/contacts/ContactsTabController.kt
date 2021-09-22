@@ -6,6 +6,7 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.Handler
 import android.os.Looper
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -54,8 +55,15 @@ class ContactsTabController : Controller {
         if (initialized) {
             return
         }
+        this.context = context
         initialized = true
-        invalidateContext(context)
+        Log.d(TAG, "invalidate context")
+        val recyclerView =
+            LayoutInflater.from(context)
+                .inflate(R.layout.contacts_tab_layout, null) as RecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        viewHolder = ContactsTabViewHolder(recyclerView)
+        viewHolder?.setNewData(latestData)
         applyLoadedContacts(raiseCache(), false)
         contactsApi = provideApi()
         launchContactsRequest()
@@ -63,13 +71,6 @@ class ContactsTabController : Controller {
 
     override fun invalidateContext(newContext: Context) {
         this.context = newContext
-        Log.d(TAG, "invalidate context")
-        val recyclerView =
-            LayoutInflater.from(newContext)
-                .inflate(R.layout.contacts_tab_layout, null) as RecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(newContext)
-        viewHolder = ContactsTabViewHolder(recyclerView)
-        viewHolder?.setNewData(latestData)
     }
 
     override fun getView(context: Context): View {
@@ -83,12 +84,16 @@ class ContactsTabController : Controller {
 
     override fun onCreate() = Unit
 
-    override fun onDestroy() {
-        viewHolder = null
-        removeCallback()
-        loadingJob?.cancel()
-        loadingJob = null
-        context = null
+    override fun onDestroy(temporary: Boolean) {
+        Log.d(TAG, "onDestroy")
+        if (!temporary) {
+            Log.d(TAG, "onDestroy not temporary")
+            viewHolder = null
+            removeCallback()
+            loadingJob?.cancel()
+            loadingJob = null
+            context = null
+        }
     }
 
     private fun removeCallback() {

@@ -12,5 +12,5 @@ interface Controller {
 
     fun onCreate()
 
-    fun onDestroy()
+    fun onDestroy(isTemporary: Boolean)
 }
