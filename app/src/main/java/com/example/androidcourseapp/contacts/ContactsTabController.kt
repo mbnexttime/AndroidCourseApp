@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidcourseapp.Controller
 import com.example.androidcourseapp.R
+import com.example.androidcourseapp.navigation.BottomNavigationItem
 import com.example.androidcourseapp.utils.Item
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.*
@@ -85,6 +86,11 @@ class ContactsTabController : Controller {
         return viewHolder!!.getView()
     }
 
+    override fun getViewUncheck(): View {
+        return viewHolder?.getView()
+            ?: throw java.lang.RuntimeException("no view in $TAG on getViewUncheck")
+    }
+
     override fun onCreate() = Unit
 
     override fun onDestroy(temporary: Boolean) {
@@ -100,8 +106,10 @@ class ContactsTabController : Controller {
         }
     }
 
-    override fun getDataForBottomNavigationToolbar() {
-
+    override fun getDataForBottomNavigationToolbar(context: Context): BottomNavigationItem {
+        return BottomNavigationItem(
+            context.getDrawable(R.drawable.ic_launcher_foreground)!!, "контакты"
+        )
     }
 
     private fun removeCallback() {
@@ -147,7 +155,7 @@ class ContactsTabController : Controller {
         val resultList = ArrayList<Item>()
         for (i in contacts.indices) {
             resultList.add(contacts[i])
-            if (i != contacts.size) {
+            if (i != contacts.size - 1) {
                 resultList.add(DelimItem())
             }
         }

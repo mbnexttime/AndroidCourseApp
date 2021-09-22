@@ -5,8 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.ViewStub
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.androidcourseapp.contacts.ContactsTabController
+import com.example.androidcourseapp.navigation.BottomTabNavigationController
+import com.example.androidcourseapp.navigation.MainViewPagerCallbacksImpl
 import com.example.androidcourseapp.utils.MainPagerAdapter
 
 class MainActivity : Activity() {
@@ -14,6 +18,7 @@ class MainActivity : Activity() {
     private lateinit var viewPager: ViewPager
     private lateinit var adapter: MainPagerAdapter
     private var controllers: List<Controller> = emptyList()
+    private lateinit var bottomTabNavigationController: BottomTabNavigationController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +43,16 @@ class MainActivity : Activity() {
             viewPager.adapter = adapter
         }
         adapter.notifyDataSetChanged()
+
+        val viewStub = mainViewGroup.findViewById<ViewStub>(R.id.bottom_navigation_toolbar)
+        bottomTabNavigationController =
+            BottomTabNavigationController(viewStub, MainViewPagerCallbacksImpl(viewPager))
+        bottomTabNavigationController.initialize(this, controllers)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        bottomTabNavigationController.updateChosenMark()
     }
 
     override fun onDestroy() {
@@ -51,15 +66,6 @@ class MainActivity : Activity() {
     private fun getTabs(): List<Controller> {
         Log.d(TAG, "creating tabs")
         return listOf(
-            ContactsTabController(),
-            ContactsTabController(),
-            ContactsTabController(),
-            ContactsTabController(),
-            ContactsTabController(),
-            ContactsTabController(),
-            ContactsTabController(),
-            ContactsTabController(),
-            ContactsTabController(),
             ContactsTabController(),
             ContactsTabController(),
             ContactsTabController(),
