@@ -51,6 +51,8 @@ class MainActivity : Activity() {
     private fun getTabs(): List<Controller> {
         Log.d(TAG, "creating tabs")
         return listOf(
+            ContactsTabController(),
+            ContactsTabController(),
             ContactsTabController()
         )
     }

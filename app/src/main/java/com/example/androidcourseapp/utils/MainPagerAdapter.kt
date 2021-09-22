@@ -12,22 +12,38 @@ class MainPagerAdapter(
     override fun getCount(): Int {
         return controllers.size
     }
-    private val attached = HashMap<Controller, Boolean>()
+
+    private val view2Controller = HashMap<View, Controller>()
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view == `object`
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
+        Log.e("kirill", position.toString())
         val controller = controllers[position]
-        if (attached[controller] == true) {
-            return Any()
-        }
         val view: View = controller.getView(container.context)
-        container.addView(view, position)
-        attached[controller] = true
+        view2Controller[view] = controller
+        insertView(container, position, view)
         return view
     }
 
-    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) = Unit
+    private fun insertView(
+        container: ViewGroup,
+        position: Int,
+        view: View
+    ) {
+        for (i in 0 until container.childCount) {
+            val challenge = view2Controller[container.getChildAt(i)] ?: continue
+            if (position < controllers.indexOf(challenge)) {
+                container.addView(view, i)
+                return
+            }
+        }
+        container.addView(view)
+    }
+
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        container.removeView(`object` as View)
+    }
 }
