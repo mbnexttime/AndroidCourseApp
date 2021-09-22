@@ -27,6 +27,8 @@ import java.lang.Runnable
 class ContactsTabController : Controller {
     private var viewHolder: ContactsTabViewHolder? = null
 
+    private var isAttached: Boolean = false
+
     private var initialized: Boolean = false
 
     private lateinit var contactsApi: ContactsApi
@@ -79,6 +81,7 @@ class ContactsTabController : Controller {
         if (viewHolder == null) {
             throw RuntimeException("view holder is null after initialization in ContactsTabController")
         }
+        isAttached = true
         return viewHolder!!.getView()
     }
 
@@ -93,7 +96,12 @@ class ContactsTabController : Controller {
             loadingJob?.cancel()
             loadingJob = null
             context = null
+            isAttached = false
         }
+    }
+
+    override fun getDataForBottomNavigationToolbar() {
+
     }
 
     private fun removeCallback() {

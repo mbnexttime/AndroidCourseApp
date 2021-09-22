@@ -3,14 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/contact_background"
     android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/contact_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/contact_image_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="50dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/contact_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+    </androidx.cardview.widget.CardView>
+
 
     <TextView
         android:id="@+id/contact_name"
@@ -18,8 +29,22 @@
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        app:layout_constraintStart_toEndOf="@id/contact_image"
+        android:fontFamily="@font/open_sans_bold"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        app:layout_constraintStart_toEndOf="@id/contact_image_wrapper"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/group_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/contact_group_info_color"
+        android:textSize="16dp"
+        app:layout_constraintStart_toEndOf="@id/contact_image_wrapper"
+        app:layout_constraintTop_toBottomOf="@id/contact_name" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

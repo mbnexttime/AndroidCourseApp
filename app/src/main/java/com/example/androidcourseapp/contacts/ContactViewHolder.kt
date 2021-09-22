@@ -9,4 +9,5 @@ import com.example.androidcourseapp.R
 class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val avatarView = itemView.findViewById<ImageView>(R.id.contact_image)
     val nameView = itemView.findViewById<TextView>(R.id.contact_name)
+    val groupInfo = itemView.findViewById<TextView>(R.id.group_info)
 }

@@ -13,4 +13,6 @@ interface Controller {
     fun onCreate()
 
     fun onDestroy(isTemporary: Boolean)
+
+    fun getDataForBottomNavigationToolbar()
 }

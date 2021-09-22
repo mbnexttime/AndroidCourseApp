@@ -22,7 +22,9 @@ class ContactViewHolderDelegate : Delegate {
 
 
         contactViewHolder.nameView.text = data.userName
-        Glide.with(contactViewHolder.avatarView).load(data.avatarUrl).into(contactViewHolder.avatarView)
+        contactViewHolder.groupInfo.text = data.groupName
+        Glide.with(contactViewHolder.avatarView).load(data.avatarUrl)
+            .into(contactViewHolder.avatarView)
     }
 
     override fun match(item: Item): Boolean {
